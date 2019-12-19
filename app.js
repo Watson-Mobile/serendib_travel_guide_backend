@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 const user = require('./routes/user.route'); // initialize express app
 const app = express();
 
-let port = 1234;
 
 app.use('/user', user);
 
