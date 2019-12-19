@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
 
-// Require the controllers WHICH WE DID NOT CREATE YET!!
+// import user controller
 const user_controller = require('../controllers/user.controller');
 
 
-// a simple test url to check that all of our files are communicating correctly.
+// create user get url
 router.get('/user', user_controller.user);
 module.exports = router;
