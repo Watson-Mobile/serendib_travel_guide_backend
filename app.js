@@ -1,6 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const user = require('./routes/user.route'); // initialize our express app
+const user = require('./routes/user.route'); // initialize express app
 const app = express();
 
 let port = 1234;
