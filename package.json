@@ -4,8 +4,8 @@
   "description": "This is a mobile application for travellers",
   "main": "app.js",
   "scripts": {
-    "start":"node app.js",
-    "start-dev":"nodemon app.js",
+    "start": "node app.js",
+    "start-dev": "nodemon app.js",
     "test": ""
   },
   "author": "team_watson",
@@ -15,6 +15,8 @@
     "express": "^4.17.1",
     "http": "0.0.0",
     "mongoose": "^5.8.1",
+    "mongoose-geojson-schema": "^2.1.5",
+    "mongoose-type-email": "^1.0.11",
     "morgan": "^1.9.1"
   },
   "devDependencies": {
