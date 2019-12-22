@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 require('mongoose-type-email');
 const GeoJSON = require('mongoose-geojson-schema');
+const bcrypt = require('bcryptjs');
 
 const Schema = mongoose.Schema;
 
@@ -18,7 +19,7 @@ const UserSchema = new Schema({
         type: mongoose.Schema.Types.MultiPoint,
         required:function(){this.userType=='Local_Assistent'}
       },
-    password:{type:String,required:true,select:false},
+    password:{type:String,required:true,select:false}
 });
 
 
@@ -26,13 +27,19 @@ UserSchema.pre('save',function (next) {
     var user = this;
   
     if(!user.isModified('password'))return next();
-  
-    bcrypt.hash(user.password, null, null, (err,hash) => {
-      if(err) return next(er);
-  
-      user.password = hash;
-      next();
-  
+
+    bcrypt.genSalt(10, function(err, salt) {
+        if(err) return next(err);
+
+        bcrypt.hash(user.password, salt, function(err, hash) {
+
+            if(err) return next(err);
+            
+            // Store hash in your password DB.
+            user.password = hash;
+            next();
+
+        });
     });
   
   });

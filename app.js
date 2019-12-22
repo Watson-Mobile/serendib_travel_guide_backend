@@ -14,6 +14,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('dev'));     //logging middleware
 
+
+mongoose.set('useCreateIndex', true)
 // API file for interacting with MongoDB
 mongoose.connect(config.database,{ useUnifiedTopology: true }, function (err) {
     if (err) {
