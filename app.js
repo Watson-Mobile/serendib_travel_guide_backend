@@ -4,6 +4,8 @@ const user = require('./routes/user.route'); // initialize express app
 let mongoose = require('mongoose');
 let config = require('./config');
 let morgan = require('morgan');
+var http = require('http');
+
 
 const app = express();
 
@@ -28,7 +30,9 @@ mongoose.connect(config.database,{ useUnifiedTopology: true }, function (err) {
 
 app.use('/api', user);
 
-app.listen(port, function (err) {
+let server = http.createServer(app);
+
+server.listen(port, function (err) {
     if (err) {
       console.log(err);
     }

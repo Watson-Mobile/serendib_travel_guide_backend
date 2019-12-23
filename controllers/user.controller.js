@@ -2,16 +2,16 @@ const User = require('../models/user.model');
 
 exports.user = function (req, res) {
        let user = new User({
-              firstname: "Piyumi",
-              lastname: "Sudusinghe",
-              username:"Piyumi",
-              email:"piyumisu@gmail.com",
-              userType:'Local_Assistent',
-              telephone_number:['0715818904'],
-              nic_num:"955902341V",
-              guide_location:{type: "MultiPoint",
-                                   coordinates: [[-113.806458, 44.847784],[12.123456, 13.134578]]
-                            },
+              firstname: "Isuri",
+              lastname: "Madhushanki",
+              username:"Isuri",
+              email:"isurimadhu@gmail.com",
+              userType:'Traveler',
+              telephone_number:['0715818000'],
+              // nic_num:"955902341V",
+              // guide_location:{type: "MultiPoint",
+              //                      coordinates: [[-113.806458, 44.847784],[12.123456, 13.134578]]
+              //               },
               password:"pass123"
        });
 
