@@ -22,7 +22,7 @@ app.use(morgan('dev'));     //logging middleware
 
 mongoose.set('useCreateIndex', true)
 // API file for interacting with MongoDB
-mongoose.connect(config.database,{ useUnifiedTopology: true }, function (err) {
+mongoose.connect(config.database_prod,{ useUnifiedTopology: true }, function (err) {
     if (err) {
       console.log(err);
     }
