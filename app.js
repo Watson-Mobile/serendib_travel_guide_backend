@@ -1,10 +1,13 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const user = require('./routes/user.route'); // initialize express app
 let mongoose = require('mongoose');
 let config = require('./config');
 let morgan = require('morgan');
 var http = require('http');
+
+const user = require('./routes/user.route'); // initialize express app
+const place = require('./routes/place.route');
+const test = require('./routes/test.route');
 
 
 const app = express();
@@ -29,6 +32,8 @@ mongoose.connect(config.database,{ useUnifiedTopology: true }, function (err) {
 });
 
 app.use('/api', user);
+app.use('/api', place);
+app.use('/api', test);
 
 let server = http.createServer(app);
 
