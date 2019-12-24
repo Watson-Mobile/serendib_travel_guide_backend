@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 require('mongoose-type-email');
 const GeoJSON = require('mongoose-geojson-schema');
-const bcrypt = require('bcryptjs');
+const bcrypt = require('bcrypt');
 
 const Schema = mongoose.Schema;
 
@@ -19,7 +19,7 @@ const UserSchema = new Schema({
         type: mongoose.Schema.Types.MultiPoint,
         required:function(){this.userType=='Local_Assistent'}
       },
-    password:{type:String,required:true,select:false}
+    password:{type:String,required:true}
 });
 
 
@@ -44,13 +44,10 @@ UserSchema.pre('save',function (next) {
   
   });
   
-  UserSchema.methods.comparePassword = (password) => {
-    var user = this;
-   //compare the user password with password stored in the database
-    return bcrypt.compareSync(password, user.password)
-  };
+  UserSchema.methods.comparePassword = (password,hash) => {
+    return bcrypt.compare(password,hash);
   
-  
+  }
 
 // Export the model
 module.exports = mongoose.model('User', UserSchema);
