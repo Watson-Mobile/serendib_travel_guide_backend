@@ -3,7 +3,8 @@ const bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let config = require('./config');
 let morgan = require('morgan');
-var http = require('http');
+const https = require('https');
+const fs = require("fs");
 
 const user = require('./routes/user.route'); // initialize express app
 const place = require('./routes/place.route');
@@ -22,7 +23,7 @@ app.use(morgan('dev'));     //logging middleware
 
 mongoose.set('useCreateIndex', true)
 // API file for interacting with MongoDB
-mongoose.connect(config.database_prod,{ useUnifiedTopology: true }, function (err) {
+mongoose.connect(config.database_dev,{ useUnifiedTopology: true }, function (err) {
     if (err) {
       console.log(err);
     }
@@ -35,7 +36,13 @@ app.use('/api', user);
 app.use('/api', place);
 app.use('/api', test);
 
-let server = http.createServer(app);
+const options = {
+  key: fs.readFileSync('crypto-credentials/key.pem'),
+  cert: fs.readFileSync('crypto-credentials/cert.pem')
+};
+
+
+let server = https.createServer(options,app);
 
 server.listen(port, function (err) {
     if (err) {

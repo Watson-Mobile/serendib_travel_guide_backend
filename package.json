@@ -16,7 +16,6 @@
     "express": "^4.17.1",
     "formidable": "^1.2.1",
     "fs": "0.0.1-security",
-    "http": "0.0.0",
     "mongoose": "^5.8.1",
     "mongoose-geojson-schema": "^2.1.5",
     "mongoose-type-email": "^1.0.11",

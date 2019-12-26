@@ -45,4 +45,44 @@ let addPlace = (req,res) => {
 }
 
 
-module.exports = {addPlace};
+
+let getPlaceByName = (req,res) => {
+    let place_name = req.params.name;
+    console.log(place_name);
+
+    Place.findOne(
+        {
+            name:place_name
+        }).exec((err,place) =>{
+            if(err){
+                res.json({
+                    success:false,
+                    status: 400,
+                    message:"Failed get place," + place_name,
+                    error: err
+                });
+                return;
+
+            }else{
+
+                if(!place){
+                    res.json({
+                        success:false,
+                        status: 404,
+                        message:"Place not found",
+                    });
+                }else{
+                    res.json({
+                        success:true,
+                        status: 200,
+                        message:"Place found",
+                        data:place
+                    });
+                }
+            }
+        });
+
+}
+
+
+module.exports = {addPlace,getPlaceByName};
