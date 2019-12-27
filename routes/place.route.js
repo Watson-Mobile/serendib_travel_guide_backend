@@ -44,4 +44,8 @@ router.post('/place', (req, res) => {
 
 router.get('/place/:name',place_controller.getPlaceByName);
 
+router.get('/image',place_controller.getImage);
+
+router.get('/place',place_controller.getPlacesByGPSLocation);
+
 module.exports = router;

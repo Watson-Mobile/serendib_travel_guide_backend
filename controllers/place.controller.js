@@ -62,9 +62,7 @@ let getPlaceByName = (req,res) => {
                     error: err
                 });
                 return;
-
             }else{
-
                 if(!place){
                     res.json({
                         success:false,
@@ -85,4 +83,65 @@ let getPlaceByName = (req,res) => {
 }
 
 
-module.exports = {addPlace,getPlaceByName};
+let getImage = (req,res) => {
+    let image = req.query.image_path;
+
+    res.sendFile(image, null, function (err) {
+        if (err) {
+          res.json({
+              success:false,
+              status:400,
+              message:"Failed to send file",
+              error:err
+          });
+        } else {
+          console.log('Sent:', fileName)
+        }
+      });
+}
+
+let getPlacesByGPSLocation = (req,res) =>{
+    let longitude = Number(req.query.longitude);
+    let latitude = Number(req.query.latitude);
+
+    console.log()
+
+    Place.find({
+        location:
+       { $near :
+          {
+            $geometry: { type: "Point",  coordinates: [ longitude, latitude ] },
+            $minDistance: 0,
+            $maxDistance: 10000 //within 10km
+          }
+       }
+    }).exec((err,places)=> {
+        if(err){
+            res.json({
+                success:false,
+                status: 400,
+                message:"Error in getting places by GPS location",
+                error: err
+            });
+            return;
+        }else{
+            if(!places){
+                res.json({
+                    success:false,
+                    status: 404,
+                    message:"Places not found",
+                });
+            }else{
+                res.json({
+                    success:true,
+                    status: 200,
+                    message:places.length+" places found near given location.",
+                    data:places
+                });
+            }
+        }
+    });
+}
+
+
+module.exports = {addPlace,getPlaceByName,getImage,getPlacesByGPSLocation};
