@@ -19,6 +19,8 @@ const PlaceSchema = new Schema({
 
 });
 
+PlaceSchema.index({ location: "2dsphere" });
+
 function arrayLimit(val) {
     return val.length > 0 && val.length<=5;
   }

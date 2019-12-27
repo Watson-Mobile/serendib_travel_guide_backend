@@ -22,6 +22,8 @@ const UserSchema = new Schema({
     password:{type:String,required:true}
 });
 
+UserSchema.index({ guide_location: "2dsphere" });
+
 
 UserSchema.pre('save',function (next) {
     var user = this;

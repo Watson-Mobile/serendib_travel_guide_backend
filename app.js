@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 let mongoose = require('mongoose');
 let config = require('./config');
 let morgan = require('morgan');
-const https = require('https');
+const https = require('http');
 const fs = require("fs");
 
 const user = require('./routes/user.route'); // initialize express app
@@ -42,7 +42,7 @@ const options = {
 };
 
 
-let server = https.createServer(options,app);
+let server = https.createServer(app);
 
 server.listen(port, function (err) {
     if (err) {
