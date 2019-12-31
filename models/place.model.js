@@ -5,6 +5,7 @@ const Schema = mongoose.Schema;
 
 const PlaceSchema = new Schema({
     name: {type: String, required: true, unique:true},
+    other_names: {type:[String]},
     location:{
         type: mongoose.Schema.Types.Point,
         required:true
