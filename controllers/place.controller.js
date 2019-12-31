@@ -180,7 +180,7 @@ let getAllPlaces = (req,res) =>{
                 res.json({
                     success:true,
                     status: 200,
-                    message:"All places recorded in the system is fetched",
+                    message:"All places recorded in the system is fetched"+"("+places.length+")",
                     data:places,
                     error:null
                 });
