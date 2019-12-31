@@ -8,6 +8,7 @@ const fs = require("fs");
 
 const user = require('./routes/user.route'); // initialize express app
 const place = require('./routes/place.route');
+const visit = require('./routes/visit.route');
 const test = require('./routes/test.route');
 
 
@@ -34,7 +35,8 @@ mongoose.connect(config.database_prod,{ useUnifiedTopology: true }, function (er
 
 app.use('/api', user);
 app.use('/api', place);
-app.use('/api', test);
+app.use('/api',visit);
+//app.use('/api', test);
 
 const options = {
   key: fs.readFileSync('crypto-credentials/key.pem'),
