@@ -95,7 +95,7 @@ let getImage = (req,res) => {
               error:err
           });
         } else {
-          console.log('Sent:', fileName)
+          console.log('Sent:', image)
         }
       });
 }
