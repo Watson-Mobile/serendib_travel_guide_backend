@@ -9,6 +9,7 @@ const fs = require("fs");
 const user = require('./routes/user.route'); // initialize express app
 const place = require('./routes/place.route');
 const visit = require('./routes/visit.route');
+const review = require('./routes/review.route');
 const test = require('./routes/test.route');
 
 
@@ -24,7 +25,10 @@ app.use(morgan('dev'));     //logging middleware
 
 mongoose.set('useCreateIndex', true)
 // API file for interacting with MongoDB
-mongoose.connect(config.database_prod,{ useUnifiedTopology: true }, function (err) {
+mongoose.connect(config.database_prod,
+  { 
+    useUnifiedTopology: true
+  }, function (err) {
     if (err) {
       console.log(err);
     }
@@ -36,6 +40,7 @@ mongoose.connect(config.database_prod,{ useUnifiedTopology: true }, function (er
 app.use('/api', user);
 app.use('/api', place);
 app.use('/api',visit);
+app.use('/api',review);
 //app.use('/api', test);
 
 const options = {
