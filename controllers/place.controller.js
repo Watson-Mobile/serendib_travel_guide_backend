@@ -30,6 +30,7 @@ let addPlace = (req,res) => {
                 success:false,
                 status: 400,
                 message:"Failed to save place",
+                data:null,
                 error: err
             });
             return;
@@ -39,7 +40,8 @@ let addPlace = (req,res) => {
             success: true,
             status: 200,
             message: 'Place added',
-            data:place
+            data:place,
+            error:null
         });
     })
 }
@@ -59,6 +61,7 @@ let getPlaceByName = (req,res) => {
                     success:false,
                     status: 400,
                     message:"Failed get place," + place_name,
+                    data:null,
                     error: err
                 });
                 return;
@@ -68,13 +71,16 @@ let getPlaceByName = (req,res) => {
                         success:false,
                         status: 404,
                         message:"Place not found",
+                        data:null,
+                        error:"Not found"
                     });
                 }else{
                     res.json({
                         success:true,
                         status: 200,
                         message:"Place found",
-                        data:place
+                        data:place,
+                        error:null
                     });
                 }
             }
@@ -92,6 +98,7 @@ let getImage = (req,res) => {
               success:false,
               status:400,
               message:"Failed to send file",
+              data:null,
               error:err
           });
         } else {
@@ -121,6 +128,7 @@ let getPlacesByGPSLocation = (req,res) =>{
                 success:false,
                 status: 400,
                 message:"Error in getting places by GPS location",
+                data:null,
                 error: err
             });
             return;
@@ -130,13 +138,16 @@ let getPlacesByGPSLocation = (req,res) =>{
                     success:false,
                     status: 404,
                     message:"Places not found",
+                    data:null,
+                    error:"Not found"
                 });
             }else{
                 res.json({
                     success:true,
                     status: 200,
                     message:places.length+" places found near given location.",
-                    data:places
+                    data:places,
+                    error:null
                 });
             }
         }
@@ -144,4 +155,40 @@ let getPlacesByGPSLocation = (req,res) =>{
 }
 
 
-module.exports = {addPlace,getPlaceByName,getImage,getPlacesByGPSLocation};
+let getAllPlaces = (req,res) =>{
+    Place.find({}).exec((err,places)=>{
+        if(err){
+            res.json({
+                success:false,
+                status: 400,
+                message:"Error in fetching all places",
+                data:null,
+                error: err
+            });
+            return;
+        }
+        else{
+            if(!places){
+                res.json({
+                    success:false,
+                    status: 404,
+                    message:"Places not found",
+                    data:null,
+                    error:"Not found"
+                });
+            }else{
+                res.json({
+                    success:true,
+                    status: 200,
+                    message:"All places recorded in the system is fetched",
+                    data:places,
+                    error:null
+                });
+            }
+        }
+    });
+
+}
+
+
+module.exports = {addPlace,getPlaceByName,getImage,getPlacesByGPSLocation,getAllPlaces};

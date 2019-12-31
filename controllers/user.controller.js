@@ -22,7 +22,8 @@ let addUser = (req,res) => {
                 success:false,
                 status: 400,
                 message:"Failed to save user",
-                error: err
+                error: err,
+                data:null
             });
             return;
         } 
@@ -31,7 +32,9 @@ let addUser = (req,res) => {
             success: true,
             status: 200,
             message: 'User is created',
-            data:user.username
+            data:user.username,
+            error:null
+
         });
     })
 
@@ -55,8 +58,10 @@ let getUser = (req,res) => {
         res.json({
             success:false,
             status: 400,
-            message:'Email or username is not provided.'
-        })
+            message:'Email or username is not provided.',
+            data:null,
+            error:'Email or username is not provided.'
+        });
     }
 
     User.findOne(data, (err, user) => {
@@ -65,6 +70,7 @@ let getUser = (req,res) => {
                 success:false,
                 status: 0,
                 message: "Failed to find user",
+                data:null,
                 error: err
             });
         }
@@ -72,7 +78,9 @@ let getUser = (req,res) => {
             res.json({
                 success:false,
                 status: 404,
-                message:'User not found'
+                message:'User not found',
+                data:null,
+                error:'User not found'
             });
         }
 
@@ -82,13 +90,16 @@ let getUser = (req,res) => {
                     success: false,
                     status: 403,
                     message: 'Invalid password',
+                    data:null,
+                    error:'Invalid username or password'
                 });
             }else{
                 res.json({
                     success: true,
                     status: 200,
                     message: 'User is found',
-                    data:user
+                    data:user,
+                    error:null
                 });
             }
         });
@@ -104,6 +115,7 @@ let getAllUsers = (req,res) => {
                 success:false,
                 status: 400,
                 message:"Failed to get users",
+                data:null,
                 error: err
             });
             return;
@@ -113,7 +125,8 @@ let getAllUsers = (req,res) => {
             success: true,
             status: 200,
             message: 'getAllUsers success',
-            data:users
+            data:users,
+            error:null
         });
     });
 }

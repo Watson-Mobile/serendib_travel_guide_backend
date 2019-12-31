@@ -48,4 +48,6 @@ router.get('/image',place_controller.getImage);
 
 router.get('/place',place_controller.getPlacesByGPSLocation);
 
+router.get('/all_place',place_controller.getAllPlaces);
+
 module.exports = router;
