@@ -26,15 +26,7 @@ app.use(morgan('dev'));     //logging middleware
 mongoose.set('useCreateIndex', true)
 // API file for interacting with MongoDB
 mongoose.connect(config.database_prod,
-  { 
-    useUnifiedTopology: true ,
-    server: {
-      socketOptions: {
-        socketTimeoutMS: 10,
-        connectionTimeout: 10
-      }
-    }
-  }, function (err) {
+   function (err) {
     if (err) {
       console.log(err);
     }
