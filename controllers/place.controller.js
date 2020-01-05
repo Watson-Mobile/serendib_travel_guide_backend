@@ -111,8 +111,6 @@ let getPlacesByGPSLocation = (req,res) =>{
     let longitude = Number(req.query.longitude);
     let latitude = Number(req.query.latitude);
 
-    console.log()
-
     Place.find({
         location:
        { $near :
@@ -190,5 +188,35 @@ let getAllPlaces = (req,res) =>{
 
 }
 
+let searchPlaces = (req,res) => {
+    let searchQuery = req.query.query;
 
-module.exports = {addPlace,getPlaceByName,getImage,getPlacesByGPSLocation,getAllPlaces};
+    Place.find(
+        {$text: {$search: searchQuery}}
+    )
+    .exec(function(err, results) {
+        if(err){
+            console.log(er);
+            res.json({
+                success:false,
+                status: 400,
+                message:"Error in searching places",
+                data:null,
+                error: err
+            });
+            return;
+        }
+        else{
+            res.json({
+                success:true,
+                status: 200,
+                message:"All places recorded in the system is fetched"+"("+results.length+")",
+                data:results,
+                error:null
+            }); 
+        }
+    });
+}
+
+
+module.exports = {addPlace,getPlaceByName,getImage,getPlacesByGPSLocation,getAllPlaces,searchPlaces};

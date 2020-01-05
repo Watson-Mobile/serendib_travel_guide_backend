@@ -13,11 +13,11 @@ const UserSchema = new Schema({
     userType:{ type: String,
                enum: ['Admin', 'Local_Assistent','Traveler'],
                required:true },
-    telephone_number:{type:[Number],unique:true,required:function(){this.userType=='Local_Assistent'}},
-    nic_num:{type:String,unique:true,required:function(){this.userType=='Local_Assistent'}},
+    telephone_number:{type:[Number],unique:true,required:false},
+    nic_num:{type:String,unique:true,required:false},
     guide_location:{
         type: mongoose.Schema.Types.MultiPoint,
-        required:function(){this.userType=='Local_Assistent'}
+        required:false
       },
     password:{type:String,required:true}
 });

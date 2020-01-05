@@ -79,7 +79,8 @@ let getRating = (req,res) => {
     })
     .group({
         _id: null, average_ratings: { $avg: "$rating" }
-    }).exec((err,ratings)=>{
+    })
+    .exec((err,ratings)=>{
        
         if(err){
             res.json({

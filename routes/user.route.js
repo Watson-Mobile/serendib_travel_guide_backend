@@ -11,4 +11,6 @@ router.post('/user',user_controller.addUser);
 
 router.post('/user/login',user_controller.getUser);
 
+router.get('/user/local_guides',user_controller.getLocalGuides);
+
 module.exports = router;

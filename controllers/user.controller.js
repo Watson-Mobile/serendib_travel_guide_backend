@@ -131,6 +131,44 @@ let getAllUsers = (req,res) => {
     });
 }
 
+let getLocalGuides = (req,res) => {
+    let longitude = Number(req.query.longitude);
+    let latitude = Number(req.query.latitude);
+
+    User.find({
+        guide_location:
+        { $near :
+           {
+             $geometry: { type: "Point",  coordinates: [ longitude, latitude ] },
+             $minDistance: 0,
+             $maxDistance: 5000 //within 5km
+           }
+        },
+        userType:'Local_Assistent'
+    }).exec((err,local_guides)=> {
+        if(err){
+            console.log(err);
+            res.json({
+                success:false,
+                status: 400,
+                message:"Error in getting local guides by GPS location",
+                data:null,
+                error: err
+            });
+            return;
+        }else{
+            res.json({
+                success:true,
+                status: 200,
+                message:local_guides.length+" local guides found near given location.",
+                data:local_guides,
+                error:null
+            });    
+           
+        }
+    });
+}
 
 
-module.exports = {addUser, getUser, getAllUsers};
+
+module.exports = {addUser, getUser, getAllUsers,getLocalGuides};

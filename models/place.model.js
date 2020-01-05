@@ -20,7 +20,13 @@ const PlaceSchema = new Schema({
 
 });
 
-PlaceSchema.index({ location: "2dsphere" });
+PlaceSchema.index({ 
+  location: "2dsphere",
+  name:'text',
+  description:'text',
+  type:'text',
+  other_names:'text'
+}, { default_language: "none" });
 
 function arrayLimit(val) {
     return val.length > 0 && val.length<=5;
