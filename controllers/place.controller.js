@@ -196,7 +196,7 @@ let searchPlaces = (req,res) => {
     )
     .exec(function(err, results) {
         if(err){
-            console.log(er);
+            console.log(err);
             res.json({
                 success:false,
                 status: 400,
