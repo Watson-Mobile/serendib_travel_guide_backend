@@ -112,6 +112,7 @@ let getPlacesByGPSLocation = (req,res) =>{
     let latitude = Number(req.query.latitude);
 
     Place.find({
+        verified: true,
         location:
        { $near :
           {
@@ -154,7 +155,7 @@ let getPlacesByGPSLocation = (req,res) =>{
 
 
 let getAllPlaces = (req,res) =>{
-    Place.find({}).exec((err,places)=>{
+    Place.find({verified:true}).exec((err,places)=>{
         if(err){
             res.json({
                 success:false,
@@ -192,7 +193,7 @@ let searchPlaces = (req,res) => {
     let searchQuery = req.query.query;
 
     Place.find(
-        {$text: {$search: searchQuery}}
+        {$text: {$search: searchQuery}},
     )
     .exec(function(err, results) {
         if(err){
@@ -245,5 +246,73 @@ let getGPSLocationsOfAllPlaces = (req,res) => {
 
 }
 
+let getNotVerifiedPlacesForLocalGuide = (req,res) => {
+    let longitude = req.query.longitude;
+    let latitude = req.query.latitude;
 
-module.exports = {addPlace,getPlaceByName,getImage,getPlacesByGPSLocation,getAllPlaces,searchPlaces,getGPSLocationsOfAllPlaces};
+    Place.find({
+        location:
+       { $near :
+          {
+            $geometry: { type: "Point",  coordinates: [ longitude, latitude ] },
+            $minDistance: 0,
+            $maxDistance: 10000 //within 10km
+          }
+       },
+       verified:false
+    }).exec((err,notVerifiedPlaces)=> {
+        if(err){
+            res.json({
+                success:false,
+                status: 400,
+                message:"Error in getting not verified places near given gps location",
+                data:null,
+                error: err
+            });
+            return;
+        }else{
+            res.json({
+                success:true,
+                status: 200,
+                message:notVerifiedPlaces.length + " places found near given location.",
+                data:notVerifiedPlaces,
+                error:null
+            });
+           
+        }
+    });
+}
+
+let verifyPlace = (req,res) => {
+    let _id = req.params.id;
+    Place.findByIdAndUpdate(_id,
+        {verified:true},
+        {
+            new:true,
+            upsert:false
+        }).exec((err,place)=>{
+            if(err){
+                console.log(err);
+                res.json({
+                    success:false,
+                    status: 400,
+                    message:"Error in updating as verified",
+                    data:null,
+                    error: err
+                });
+                return;
+            }
+            else{
+                res.json({
+                    success:true,
+                    status: 200,
+                    message:"place is verified",
+                    data:place,
+                    error:null
+                }); 
+            }
+        })
+}
+
+module.exports = {addPlace,getPlaceByName,getImage,getPlacesByGPSLocation,getAllPlaces,searchPlaces,
+                    getGPSLocationsOfAllPlaces,getNotVerifiedPlacesForLocalGuide,verifyPlace};

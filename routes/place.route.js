@@ -54,4 +54,8 @@ router.get('/search_place',place_controller.searchPlaces);
 
 router.get('/all_place_locations',place_controller.getGPSLocationsOfAllPlaces);
 
+router.put('/place/verify/:id',place_controller.verifyPlace);
+
+router.get('/not_verified_place',place_controller.getNotVerifiedPlacesForLocalGuide);
+
 module.exports = router;
