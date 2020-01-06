@@ -46,6 +46,47 @@ let addPlace = (req,res) => {
     })
 }
 
+let addPlaceWithImagePaths = (req,res) => {
+    let location_array = [];
+
+    req.body.location.forEach(element => {
+        location_array.push(Number(element));
+    });
+
+    let place = new Place({
+        name: req.body.name,
+        location:{
+            type: "Point",
+            coordinates: location_array
+        },
+        description:req.body.description,
+        type:req.body.type_array,
+        image:req.body.images,
+        user_posted:req.body.user_object_id,
+    });
+
+    place.save((err, place) => {
+        if (err) {
+            res.json({
+                success:false,
+                status: 400,
+                message:"Failed to save place",
+                data:null,
+                error: err
+            });
+            return;
+        } 
+
+        res.json({
+            success: true,
+            status: 200,
+            message: 'Place added',
+            data:place,
+            error:null
+        });
+    })
+}
+
 
 
 let getPlaceByName = (req,res) => {
@@ -315,4 +356,4 @@ let verifyPlace = (req,res) => {
 }
 
 module.exports = {addPlace,getPlaceByName,getImage,getPlacesByGPSLocation,getAllPlaces,searchPlaces,
-                    getGPSLocationsOfAllPlaces,getNotVerifiedPlacesForLocalGuide,verifyPlace};
+                    getGPSLocationsOfAllPlaces,getNotVerifiedPlacesForLocalGuide,verifyPlace,addPlaceWithImagePaths};

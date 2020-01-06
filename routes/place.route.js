@@ -23,7 +23,25 @@ var storage = multer.diskStorage(
         }
     }
 );
+
+var storage2 = multer.diskStorage(
+    {
+        destination:function ( req, file, cb ) {
+            let desPath = path.join(rootDestinationPath,req.params.name);
+            if (!fs.existsSync(desPath)){
+                fs.mkdir(desPath,{recursive: true}, err => {});
+            }
+            cb( null, desPath);
+        },
+        filename: function ( req, file, cb ) {
+            cb( null, req.params.name +"_"+file.originalname );
+        }
+    }
+);
+
 const upload = multer({storage:storage}).array('images',5);
+
+const upload2 = multer({storage:storage2}).array('images',5);
 
 // post new place
 router.post('/place', (req, res) => {
@@ -41,6 +59,39 @@ router.post('/place', (req, res) => {
     });
        
 });
+
+router.post('/place/images/:name', (req, res) => {
+    console.log(req);
+
+    upload2(req,res,function(err) {
+        if(err) {
+            return res.json({
+                success:false,
+                status:408,
+                message:"Image upload failed.",
+                error:err
+            });
+        }else{
+            let images = req.files;
+            let image_path_array =[];
+           
+            for(let i=0 ;i<images.length ;i++){
+                image_path_array.push(images[i].path);
+            }
+
+            res.json({
+                success:false,
+                status: 400,
+                message:"Images uploaded",
+                data:image_path_array,
+                error: null
+            });
+        }
+    });
+       
+});
+
+router.post('/place/add',place_controller.addPlaceWithImagePaths);
 
 router.get('/place/:name',place_controller.getPlaceByName);
 
