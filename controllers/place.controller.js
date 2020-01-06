@@ -218,5 +218,32 @@ let searchPlaces = (req,res) => {
     });
 }
 
+let getGPSLocationsOfAllPlaces = (req,res) => {
+    Place.find({})
+    .select("location")
+    .exec((err,gpsPoints)=>{
+        if(err){
+            res.json({
+                success:false,
+                status: 400,
+                message:"Error in fetching gps coordinates of all places recorded in the system",
+                data:null,
+                error: err
+            });
+            return;
+        }
+        else{
+            res.json({
+                success:true,
+                status: 200,
+                message:"GPS coordinates of all places recorded in the system is fetched"+"("+gpsPoints.length+")",
+                data:gpsPoints,
+                error:null
+            });
+        }
+    });
 
-module.exports = {addPlace,getPlaceByName,getImage,getPlacesByGPSLocation,getAllPlaces,searchPlaces};
+}
+
+
+module.exports = {addPlace,getPlaceByName,getImage,getPlacesByGPSLocation,getAllPlaces,searchPlaces,getGPSLocationsOfAllPlaces};

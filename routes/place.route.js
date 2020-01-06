@@ -52,4 +52,6 @@ router.get('/all_place',place_controller.getAllPlaces);
 
 router.get('/search_place',place_controller.searchPlaces);
 
+router.get('/all_place_locations',place_controller.getGPSLocationsOfAllPlaces);
+
 module.exports = router;
