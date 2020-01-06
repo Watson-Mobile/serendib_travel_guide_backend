@@ -13,7 +13,9 @@ var storage = multer.diskStorage(
     {
         destination:function ( req, file, cb ) {
             let desPath = path.join(rootDestinationPath,req.body.name);
+            console.log(desPath);
             if (!fs.existsSync(desPath)){
+                console.log("destination path is not exists and have to create");
                 fs.mkdir(desPath,{recursive: true}, err => {});
             }
             cb( null, desPath);
@@ -45,19 +47,23 @@ const upload2 = multer({storage:storage2}).array('images',5);
 
 // post new place
 router.post('/place', (req, res) => {
-    upload(req,res,function(err) {
-        if(err) {
-            return res.json({
-                success:false,
-                status:408,
-                message:"Image upload failed.",
-                error:err
-            });
-        }else{
-            place_controller.addPlace(req,res);
-        }
-    });
-       
+    try {
+        console.log(req.body);
+        upload(req,res,function(err) {
+            if(err) {
+                return res.json({
+                    success:false,
+                    status:408,
+                    message:"Image upload failed.",
+                    error:err
+                });
+            }else{
+                place_controller.addPlace(req,res);
+            }
+        });
+    } catch (error) {
+        console.log(error);
+    }    
 });
 
 router.post('/place/images/:name', (req, res) => {
