@@ -29,14 +29,14 @@ var storage = multer.diskStorage(
 var storage2 = multer.diskStorage(
     {
         destination:function ( req, file, cb ) {
-            let desPath = path.join(rootDestinationPath,req.params.name);
+            let desPath = path.join(rootDestinationPath,req.query.name);
             if (!fs.existsSync(desPath)){
                 fs.mkdir(desPath,{recursive: true}, err => {});
             }
             cb( null, desPath);
         },
         filename: function ( req, file, cb ) {
-            cb( null, req.params.name +"_"+file.originalname );
+            cb( null, req.query.name +"_"+file.originalname );
         }
     }
 );
@@ -70,7 +70,7 @@ router.post('/place', (req, res) => {
     }    
 });
 
-router.post('/place/images/:name', (req, res) => {
+router.post('/place/images', (req, res) => {
     console.log(req);
 
     upload2(req,res,function(err) {
