@@ -22,6 +22,7 @@ let addPlace = (req,res) => {
         type:req.body.type_array,
         image:image_path_array,
         user_posted:req.body.user_object_id,
+        other_names:req.body.other_names
     });
 
     place.save((err, place) => {

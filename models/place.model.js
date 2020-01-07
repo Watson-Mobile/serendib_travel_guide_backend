@@ -13,13 +13,17 @@ const PlaceSchema = new Schema({
     description:{type: String, required: true, max: 500},
     type:{ type: [String],
         enum: ['Historical','Heritage' ,'Religious','Nature','Leisure','Adventure','Cultural','Wildlife','Supermarket','Other'],
-        required:true },
+        required:true,
+        default:'Other' },
     image:{type:[String],validate: [arrayLimit, '0 < num_images <= 5'],required:false},
     user_posted:{type:Schema.Types.ObjectId,ref:'User'},
     date_posted:{type: Date, default: Date.now},
     verified:{type:Boolean, default:false}
 
 });
+
+PlaceSchema.index({ 
+  location: "2dsphere"});
 
 PlaceSchema.index({ 
   location: "2dsphere",
