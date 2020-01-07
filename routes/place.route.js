@@ -21,7 +21,7 @@ var storage = multer.diskStorage(
             cb( null, desPath);
         },
         filename: function ( req, file, cb ) {
-            cb( null, req.body.name +"_"+file.originalname );
+            cb( null, rNumbereq.body.name +"_"+file.originalname );
         }
     }
 );
@@ -50,7 +50,7 @@ router.post('/place', (req, res) => {
     try {
         console.log(req.body+" place posed..........................");
         console.log("place name:"+req.body.name);
-        console.log("place type"+req.body.location_array[0]);
+        console.log("place type"+req.body.location_array);
         upload(req,res,function(err) {
             if(err) {
                 console.log("Error"+err)
