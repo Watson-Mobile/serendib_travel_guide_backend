@@ -1,27 +1,49 @@
 const User = require('../models/user.model');
 
 let addUser = (req,res) => {
-    console.log("add user controller method called");
-    let longitude = Number(req.body.guide_location[0]);
-    let latitude = Number(req.body.guide_location[1]);
+    let longitude;
+    let latitude;
     let guide_location = [];
+    let user;
+    console.log("add user controller method called");
+    if(req.body.userType=='Local_Assistent'){
+        longitude = Number(req.body.guide_location[0]);
+        latitude = Number(req.body.guide_location[1]);
+        guide_location.push(longitude);
+        guide_location.push(latitude);
+
+        user = new User({
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            username:req.body.username,
+            email:req.body.email,
+            userType:req.body.userType,
+            telephone_number:req.body.telephone_number,
+            password:req.body.password,
+            nic_num:req.body.nic_num,
+            guide_location: {
+                type: "Point",
+                coordinates: guide_location
+            }
+        });
+    
+    }
+    else{
+        user = new User({
+            firstname: req.body.firstname,
+            lastname: req.body.lastname,
+            username:req.body.username,
+            email:req.body.email,
+            userType:req.body.userType,
+            telephone_number:req.body.telephone_number,
+            password:req.body.password
+    
+        });
+    }
+
     guide_location.push(longitude);
     guide_location.push(latitude);
-    let user = new User({
-        firstname: req.body.firstname,
-        lastname: req.body.lastname,
-        username:req.body.username,
-        email:req.body.email,
-        userType:req.body.userType,
-        telephone_number:req.body.telephone_number,
-        password:req.body.password,
-        nic_num:req.body.nic_num,
-        guide_location: {
-            type: "MultiPoint",
-            coordinates: guide_location
-        },
-    });
-
+   
     user.save((err, user) => {
         if (err) {
             res.json({
