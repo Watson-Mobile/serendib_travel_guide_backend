@@ -6,7 +6,7 @@ let addUser = (req,res) => {
     let guide_location = [];
     let user;
     console.log("add user controller method called");
-    if(req.body.userType=='Local_Assistent'){
+    if(req.body.userType==='Local_Assistent'){
         longitude = Number(req.body.guide_location[0]);
         latitude = Number(req.body.guide_location[1]);
         guide_location.push(longitude);
