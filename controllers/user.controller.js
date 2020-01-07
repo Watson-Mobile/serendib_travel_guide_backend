@@ -36,7 +36,8 @@ let addUser = (req,res) => {
             email:req.body.email,
             userType:req.body.userType,
             telephone_number:req.body.telephone_number,
-            password:req.body.password
+            password:req.body.password,
+            nic_num:req.body.nic_num
     
         });
     }
