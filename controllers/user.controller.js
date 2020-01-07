@@ -40,9 +40,6 @@ let addUser = (req,res) => {
     
         });
     }
-
-    guide_location.push(longitude);
-    guide_location.push(latitude);
    
     user.save((err, user) => {
         if (err) {
