@@ -64,6 +64,7 @@ let addPlaceWithImagePaths = (req,res) => {
         type:req.body.type_array,
         image:req.body.images,
         user_posted:req.body.user_object_id,
+        other_names:req.body.other_names
     });
 
     place.save((err, place) => {
