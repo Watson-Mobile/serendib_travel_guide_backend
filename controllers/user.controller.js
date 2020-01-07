@@ -112,6 +112,7 @@ let getUser = (req,res) => {
             });
         }
 
+       try {
         user.comparePassword(password,user.password).then(match =>{
             if(!match){
                 res.json({
@@ -131,6 +132,17 @@ let getUser = (req,res) => {
                 });
             }
         });
+       } catch (error) {
+           console.log(error);
+           res.json({
+            success: false,
+            status: 403,
+            message: 'Invalid password',
+            data:null,
+            error:error
+        });
+       }
+       
     });
 
 }
