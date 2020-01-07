@@ -25,8 +25,8 @@ app.use(morgan('dev'));     //logging middleware
 
 mongoose.set('useCreateIndex', true)
 // API file for interacting with MongoDB
-mongoose.connect(config.database_prod,
-   function (err) {
+mongoose.connect(config.database_dev_new,
+ function (err) {
     if (err) {
       console.log(err);
     }

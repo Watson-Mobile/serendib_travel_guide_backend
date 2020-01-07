@@ -16,7 +16,7 @@ const UserSchema = new Schema({
     telephone_number:{type:[Number],unique:true,required:false},
     nic_num:{type:String,unique:true,required:false},
     guide_location:{
-        type: mongoose.Schema.Types.MultiPoint,
+        type: mongoose.Schema.Types.Point,
         required:false
       },
     password:{type:String,required:true}

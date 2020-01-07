@@ -2,6 +2,11 @@ const User = require('../models/user.model');
 
 let addUser = (req,res) => {
     console.log("add user controller method called");
+    let longitude = Number(req.body.guide_location[0]);
+    let latitude = Number(req.body.guide_location[1]);
+    let guide_location = [];
+    guide_location.push(longitude);
+    guide_location.push(latitude);
     let user = new User({
         firstname: req.body.firstname,
         lastname: req.body.lastname,
@@ -13,7 +18,7 @@ let addUser = (req,res) => {
         nic_num:req.body.nic_num,
         guide_location: {
             type: "MultiPoint",
-            coordinates: req.body.guide_location
+            coordinates: guide_location
         },
     });
 
