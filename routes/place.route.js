@@ -48,9 +48,12 @@ const upload2 = multer({storage:storage2}).array('images',5);
 // post new place
 router.post('/place', (req, res) => {
     try {
-        console.log(req.body);
+        console.log(req.body+" place posed..........................");
+        console.log("place name:"+req.body.name);
+        console.log("place type"+req.body.location_array[0]);
         upload(req,res,function(err) {
             if(err) {
+                console.log("Error"+err)
                 return res.json({
                     success:false,
                     status:408,
@@ -59,6 +62,7 @@ router.post('/place', (req, res) => {
                 });
             }else{
                 place_controller.addPlace(req,res);
+                console.log("place added")
             }
         });
     } catch (error) {

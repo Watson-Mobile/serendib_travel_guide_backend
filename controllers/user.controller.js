@@ -1,6 +1,7 @@
 const User = require('../models/user.model');
 
 let addUser = (req,res) => {
+    console.log("add user controller method called");
     let user = new User({
         firstname: req.body.firstname,
         lastname: req.body.lastname,

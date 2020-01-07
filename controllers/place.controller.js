@@ -1,7 +1,7 @@
 const Place = require('../models/place.model');
 
 let addPlace = (req,res) => {
-    
+    console.log("call to add place controller method");
     let images = req.files;
     let image_path_array =[];
     let location_array = [];
